@@ -76,3 +76,26 @@ function addDepartment(){
     start();
     })
 };
+
+function addRole() {
+    inquirer.prompt([{
+        type: "input",
+        message: "Enter Role:",
+        name: "title"
+    }, {
+        type: "number",
+        message: "Enter Salary:",
+        name: "salary"
+    }, {
+        message: "Enter Department ID:",
+        type: "number",
+        name: "department_id"
+    }]).then(function(res) {
+        connection.query("INSERT INTO role (title, salary, department_id) values (?, ?, ?)", [res.title, res.salary, res.department_id], function(err, data) {
+            if (err) throw err;
+            // console.table(data);
+        })
+        start();
+    })
+
+}
