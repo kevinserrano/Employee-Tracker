@@ -20,17 +20,45 @@ function start(){
     inquirer.prompt(
         {
 type: "list",
-message: "What would you like to do?",
+message: "What would you like to do today?",
+name: "options",
 choices: [
     "Add Department",
     "Add Role",
     "Add Employee",
-    "View Department",
-    "View Role",
-    "View Employee",
+    "View Departments",
+    "View Roles",
+    "View Employees",
     "Update Employee Role",
-    "EXIT"],
-name: "choice"
-
+    "Nothing",
+        ]
     })
-}
+.then(function(result) {
+    switch (result.options){
+        case "Add Department":
+            return addDepartment();
+            break;
+        case "Add Role":
+            return addRole();
+            break;
+        case "Add Employee":
+            return addEmployee();
+            break;
+        case "View Departments":
+            return viewDepartments();
+            break;
+        case "View Roles":
+            return viewRoles();
+            break;
+        case "View Employees":
+            return viewEmployees();
+            break;
+        case "Update Employee Role":
+            return updateRole();
+            break;
+            case "Nothing":
+                connection.end();
+                break;
+
+    }
+})
