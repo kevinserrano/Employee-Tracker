@@ -87,8 +87,8 @@ function addRole() {
         message: "Enter Salary:",
         name: "salary"
     }, {
-        message: "Enter Department ID:",
         type: "number",
+        message: "Enter Department ID:",
         name: "department_id"
     }]).then(function(res) {
         connection.query("INSERT INTO role (title, salary, department_id) values (?, ?, ?)", [res.title, res.salary, res.department_id], function(err, data) {
@@ -97,5 +97,31 @@ function addRole() {
         })
         start();
     })
+
+};
+
+function addEmployee(){
+    inquirer.prompt([
+        {
+          type: "input",
+          message: "What is the Employee's First Name?",
+          name: "first_name"
+        },
+        {
+          type: "input",
+          message: "What is the Employee's Last Name?",
+          name: "last_name"
+        },
+        {
+
+            type: "list",
+            message: "Company Role",
+            name: "role"
+        }
+      ]).then(function(userAns){
+          let role_id = [];
+          for (var i = 0, i < )
+      })
+
 
 }
