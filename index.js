@@ -1,6 +1,6 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
-const { start } = require("repl");
+const consoleTable = require("console.table")
 require("dotenv").config();
 
 var connection = mysql.createConnection({
@@ -60,5 +60,19 @@ choices: [
                 connection.end();
                 break;
 
-    }
-})
+    };
+});
+};
+
+function addDepartment(){
+    inquirer.prompt([{
+        type: "input",
+        message: "Department Name:",
+        name: "department"
+    }, ]).then(function(res){
+        connection.query('INSERT INTO department (name) VALUES ?', [res.department], function(err, data){
+            if (err) throw err;
+        });
+    start();
+    })
+};
