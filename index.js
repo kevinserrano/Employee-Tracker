@@ -15,3 +15,22 @@ connection.connect(function(err) {
     if (err) throw err;
     start();
 });
+
+function start(){
+    inquirer.prompt(
+        {
+type: "list",
+message: "What would you like to do?",
+choices: [
+    "Add Department",
+    "Add Role",
+    "Add Employee",
+    "View Department",
+    "View Role",
+    "View Employee",
+    "Update Employee Role",
+    "EXIT"],
+name: "choice"
+
+    })
+}
