@@ -100,55 +100,46 @@ function addRole() {
 
 };
 
-function addEmployee(){
-
-    connection.query(
-        "SELECT * FROM role", function (err, res) {
-            if (err) throw err;
-
-    inquirer.prompt([
-        {
+function addEmployee() {
+    // prompt for info
+    inquirer.prompt([{
+          name: "firstName",
           type: "input",
-          message: "What is the Employee's First Name?",
-          name: "first_name"
+          message: "What is the employee's first name?"
         },
         {
+          name: "lastName",
           type: "input",
-          message: "What is the Employee's Last Name?",
-          name: "last_name"
+          message: "What is the employee's last name?"
         },
         {
-            type: "list",
-            message: "Company Role?",
-            name: "role",
-            choices: [
-                "Manager",
-                "Front-End Dev",
-            ]
-        }
-    ]).then(function(res) {
-        var roleID = [];
-        for (var i = 0; i < res.length; i++) {
-            if (res[i].title == res.role) {
-                roleID = res[i].id;
-            }
-        }
+          name: "roleID",
+          type: "number",
+          message: "What is the employee's role ID?",
+        },
+        {
+          name: "managerID",
+          type: "number",
+          message: "What is the employee's manager ID?",
+        },
+      ])
+      .then(function (answer) {
+        // insert a new employee into the db with that info
         connection.query(
-            "INSERT INTO employee SET ?", {
-                first_name: res.first_name,
-                last_name: res.last_name,
-                role_id: roleID,
-            },
-
-            function(err) {
-                if (err) throw err;
-                console.log("Employee successfully added!");
-                start();
-            });
-    });
-});
-};
-
+          "INSERT INTO employee SET ?", {
+            first_name: answer.firstName,
+            last_name: answer.lastName,
+            role_id: answer.roleID,
+            manager_id: answer.managerID
+          },
+          function (err) {
+            if (err) throw err;
+            console.table(`${answer.firstName} ${answer.lastName} added successfully`);
+            start();
+          }
+        );
+      });
+  }
     function viewDepartments() {
         connection.query("SELECT * FROM department", function(err, res) {
             console.table(res);
@@ -186,7 +177,6 @@ function addEmployee(){
           },
           {
             type: "input",
-            message: "Which new role ID do you want to assign to this employee?",
             name: "UpdateInfo",
           }
         ])
