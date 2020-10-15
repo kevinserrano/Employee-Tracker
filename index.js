@@ -7,7 +7,7 @@ var connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
     user: "root",
-    password: process.env.MYSQLPW,
+    password: process.env.MYSQL_PW,
     database: "employee_databaseDB"
 });
 
@@ -121,14 +121,10 @@ function addEmployee(){
             type: "list",
             message: "Company Role?",
             name: "role",
-            choices: function (){
-                if(err) throw err;
-                var difRoles = [];
-                for(var i = 0; i < res.length; i++) {
-                    difRoles.push(res[i].title);
-                }
-                return difRoles;
-            },
+            choices: [
+                "Manager",
+                "Front-End Dev",
+            ]
         }
     ]).then(function(res) {
         var roleID = [];
