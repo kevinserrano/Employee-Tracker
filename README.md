@@ -15,7 +15,7 @@
   <p> Visual Studio (VS) code and the MySQL Workbench applications are needed.</p>
 
   ## Usage
-  <p> To run the application via VS code, the user must run the following commands: npm init and npm i mysql to install the necessary package-lock.json and node_modules. Once the installs are complete, the application may be run via the following command: node index.js</p>
+  <p> To run the application via VS code, the user must run the following commands: npm init and npm i mysql to install the necessary package-lock.json and node_modules. Once the installs are complete, the application may be run via the following command: node index.js. Then the user follows the prompts and does what is needed.</p>
 
   ## License
   <img>![badge](https://img.shields.io/badge/license-MIT%20License-brightgreen)</img>
