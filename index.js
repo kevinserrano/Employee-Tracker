@@ -69,13 +69,15 @@ function addDepartment(){
         type: "input",
         message: "Department Name:",
         name: "department"
-    }, ]).then(function(res){
-        connection.query('INSERT INTO department (name) VALUES ?', [res.department], function(err, data){
+    }])
+    .then(function(res){
+        connection.query('INSERT INTO department (name) VALUES (?)', (res.department), function(err){
             if (err) throw err;
-        });
+        })
     start();
     })
 };
+
 
 function addRole() {
     inquirer.prompt([{
@@ -168,24 +170,25 @@ function addEmployee() {
           {
             type: "input",
             message: "First name of the employee would you like to update?",
-            name: "chooseEmployee1",
+            name: "firstname",
           },
           {
             type: "input",
             message: "Last name of the employee would you like to update?",
-            name: "chooseEmployee2",
+            name: "lastname",
           },
           {
             type: "input",
+            message: "What would you like to update on this employee?",
             name: "UpdateInfo",
           }
         ])
           .then(function (answer) {
-            const query = "UPDATE employee_databaseDB.employee SET role_id = " + answer.UpdateInfo + " WHERE first_name = '" + answer.chooseEmployee1 + "' and last_name='" + answer.chooseEmployee2 + "'";
+            const query = "UPDATE employee SET role_id = " + answer.UpdateInfo + " WHERE first_name = '" + answer.firstName + "' and last_name='" + answer.lastName + "'";
       
             connection.query(query, function (err, res) {
               if (err) throw err;
-            });
+            })
             start();
           })
       
