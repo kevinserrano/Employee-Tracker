@@ -1,6 +1,6 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
-const consoleTable = require("console.table")
+require("console.table")
 require("dotenv").config();
 
 var connection = mysql.createConnection({
@@ -101,6 +101,11 @@ function addRole() {
 };
 
 function addEmployee(){
+
+    connection.query(
+        "SELECT * FROM role", function (err, res) {
+            if (err) throw err;
+
     inquirer.prompt([
         {
           type: "input",
@@ -113,15 +118,47 @@ function addEmployee(){
           name: "last_name"
         },
         {
-
             type: "list",
-            message: "Company Role",
-            name: "role"
+            message: "Company Role?",
+            name: "role",
+            choices: function (){
+                if(err) throw err;
+                var difRoles = [];
+                for(var i = 0; i < res.length; i++) {
+                    difRoles.push(res[i].title);
+                }
+                return difRoles;
+            },
         }
-      ]).then(function(userAns){
-          let role_id = [];
-          for (var i = 0, i < )
-      })
+    ]).then(function(res) {
+        var roleID = [];
+        for (var i = 0; i < res.length; i++) {
+            if (res[i].title == res.role) {
+                roleID = res[i].id;
+            }
+        }
+        connection.query(
+            "INSERT INTO employee SET ?", {
+                first_name: res.first_name,
+                last_name: res.last_name,
+                role_id: roleID,
+            },
 
+            function(err) {
+                if (err) throw err;
+                console.log("Employee successfully added!");
+                start();
+            });
+    });
+});
+};
 
-}
+    function viewDepartments() {
+        console.log("Here are all current departments.")
+        connection.query("SELECT * FROM department", function(err, res) {
+            console.table(res);
+            if (err) throw err;
+            start();
+        });
+    };
+    
