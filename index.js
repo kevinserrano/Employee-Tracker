@@ -175,22 +175,19 @@ function addEmployee(){
     function updateRole() {
         inquirer.prompt([
           {
-            type: "list",
+            type: "input",
             message: "First name of the employee would you like to update?",
             name: "chooseEmployee1",
-            choices: employeeChoices1
           },
           {
-            name: "chooseEmployee2",
-            type: "list",
+            type: "input",
             message: "Last name of the employee would you like to update?",
-            choices: employeeChoices2
+            name: "chooseEmployee2",
           },
           {
-            name: "UpdateInfo",
-            type: "list",
+            type: "input",
             message: "Which new role ID do you want to assign to this employee?",
-            choices: employeeIDs
+            name: "UpdateInfo",
           }
         ])
           .then(function (answer) {
