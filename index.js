@@ -154,7 +154,6 @@ function addEmployee(){
 };
 
     function viewDepartments() {
-        console.log("Here are all current departments.")
         connection.query("SELECT * FROM department", function(err, res) {
             console.table(res);
             if (err) throw err;
@@ -162,3 +161,18 @@ function addEmployee(){
         });
     };
     
+    function viewRoles() {
+        connection.query("SELECT * FROM role", function(err, res) {
+            console.table(res);
+            if (err) throw err;
+            start();
+        });
+    };
+    function viewEmployees() {
+        connection.query("SELECT employee.id, employee.first_name, employee.last_name, role.title, department.name AS department, role.salary, CONCAT(manager.first_name, ' ', manager.last_name) AS manager FROM employee LEFT JOIN role on employee.role_id = role.id LEFT JOIN department on role.department_id = department.id LEFT JOIN employee manager on manager.id = employee.manager_id",
+            function(err, res) {
+                console.table(res);
+                if (err) throw err;
+                start();
+            });
+    };
