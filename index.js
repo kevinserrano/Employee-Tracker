@@ -57,7 +57,7 @@ choices: [
             return updateRole();
             break;
             case "Nothing":
-                connection.end();
+                stop();
                 break;
 
     };
@@ -176,3 +176,39 @@ function addEmployee(){
                 start();
             });
     };
+    function updateRole() {
+        inquirer.prompt([
+          {
+            type: "list",
+            message: "First name of the employee would you like to update?",
+            name: "chooseEmployee1",
+            choices: employeeChoices1
+          },
+          {
+            name: "chooseEmployee2",
+            type: "list",
+            message: "Last name of the employee would you like to update?",
+            choices: employeeChoices2
+          },
+          {
+            name: "UpdateInfo",
+            type: "list",
+            message: "Which new role ID do you want to assign to this employee?",
+            choices: employeeIDs
+          }
+        ])
+          .then(function (answer) {
+            const query = "UPDATE employee_databaseDB.employee SET role_id = " + answer.UpdateInfo + " WHERE first_name = '" + answer.chooseEmployee1 + "' and last_name='" + answer.chooseEmployee2 + "'";
+      
+            connection.query(query, function (err, res) {
+              if (err) throw err;
+            });
+            start();
+          })
+      
+      }
+      
+    function stop() {
+        connection.end();
+        process.exit();
+    }
